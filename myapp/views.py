@@ -18,12 +18,15 @@ def login(request):  # Change the function name
 
     return render(request, 'login.html', {'form': form})
 
+
 def welcome(request):
     return render(request, 'welcome.html')
+
 
 def menu(request):
     food_items = FoodItem.objects.all()
     return render(request, 'menu.html', {'food_items': food_items})
+
 
 def logout(request):
     auth_logout(request)
