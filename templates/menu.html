@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mo Hotel Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;}
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1em;}
+        section {
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;}
+        div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;}
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;}
+        ul {
+            list-style-type: none;
+            padding: 0;}
+        a {
+            width:4rem;
+            text-align:center;
+            display: block;
+            margin-top: 10px;
+            margin-left:40rem;
+            padding: 10px 20px;
+            background-color: blue;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Mo Hotel Menu</h1>
+    </header>
+    <section>
+        <div><input type="checkbox" name="menu" id="burger" value="Burger"><label for="burger">Burger - 100.00</label></div>
+        <div><input type="checkbox" name="menu" id="pasta" value="Pasta"><label for="pasta">Pasta - 80.00</label></div>
+        <div><input type="checkbox" name="menu" id="pizza" value="Pizza"><label for="pizza">Pizza - 150.00</label></div>
+        <div><input type="checkbox" name="menu" id="momos" value="momos"><label for="momos">momos - 60.00</label></div>
+        <div><input type="checkbox" name="menu" id="sandwich" value="sandwich"><label for="sandwich">sandwich - 70.00</label></div>
+        <div><input type="checkbox" name="menu" id="tea" value="tea"><label for="tea">tea - 20.00</label></div>
+        <div><input type="checkbox" name="menu" id="coffee" value="coffee"><label for="coffee">coffee - 25.00</label></div>
+
+        <button onclick="addToCart()">Add to Cart</button>
+    </section>
+
+    <section>
+        <h2>Shopping Cart</h2>
+        <ul id="cart-items"></ul>
+    </section>
+
+    <a href="{% url 'logout' %}">Logout</a>
+
+    <script>
+        const selectedItems = [];
+
+        function addToCart() {
+            const checkboxes = document.getElementsByName('menu');
+            const selectedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+
+            selectedCheckboxes.forEach(checkbox => {
+                const itemName = checkbox.value;
+                const itemPrice = getPrice(itemName);
+
+                selectedItems.push({ item: itemName, price: itemPrice });
+            });
+
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+
+            selectedItems.forEach(({ item, price }) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${item} - ${price.toFixed(2)}`;
+                cartItems.appendChild(listItem);
+            });
+        }
+
+        function getPrice(itemName) {
+            switch (itemName) {
+                case 'Burger': return 100.00;
+                case 'Pasta': return 80.00;
+                case 'Pizza': return 150.00;
+                case 'momos': return 60.00;
+                case 'sandwich': return 70.00;
+                case 'tea': return 20.00;
+                case 'coffee': return 25.00;
+                default: return 0.00;
+            }
+        }
+    </script>
+</body>
+</html>
+
+
